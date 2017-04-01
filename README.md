@@ -1,3 +1,4 @@
-# [Algorithms, Part I by Princeton University](https://www.coursera.org/learn/algorithms-part1)
+# [Algorithms, Part I](https://www.coursera.org/learn/algorithms-part1)
+by Princeton University
 
-The Booksite http://algs4.cs.princeton.edu/home
+The [Booksite](http://algs4.cs.princeton.edu/home) 
