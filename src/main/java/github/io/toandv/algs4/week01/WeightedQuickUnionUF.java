@@ -37,7 +37,7 @@ public class WeightedQuickUnionUF implements UF {
     @Override
     public int find(int i) {
        while(i != id[i]) {
-           // path compression, point current not to its grandparent, halving path length
+           // path compression, point current node to its grandparent, halving path length
            id[i] = id[id[i]];
            i = id[i];
        }
