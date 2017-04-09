@@ -6,42 +6,61 @@ package github.io.toandv.algs4.week01;
 public class WeightedQuickUnionUF implements UF {
 
     int id[];
+
     int sz[];
+
+    // store max value to root
+    int max[];
+
     int count;
 
     public WeightedQuickUnionUF(int n) {
         id = new int[n];
         sz = new int[n];
+        max = new int[n];
         count = n;
         for (int i = 0; i < n; i++) {
             id[i] = i;
+            max[i] = i;
             sz[i] = 1;
         }
     }
 
     @Override
     public void union(int p, int q) {
-        int proot = find(p);
-        int qroot = find(q);
-        if (qroot == proot) return;
-        if (sz[p] > sz[q]) {
-            id[q] = proot;
-            sz[p] = sz[p] + sz[q];
+        int i = find(p);
+        int j = find(q);
+        if (i == j) return;
+        // Make smaller root point to larger one.
+        if (sz[i] < sz[j]) {
+            id[i] = j;
+            sz[j] += sz[i];
         } else {
-            id[p] = qroot;
-            sz[q] = sz[q] + sz[p];
+            id[j] = i;
+            sz[i] += sz[j];
         }
         count--;
+
+        if (max[i] < max[j]) {
+            max[i] = max[j];
+        } else {
+            max[j] = max[i];
+        }
     }
 
     @Override
+    // lgn
     public int find(int i) {
-       while(i != id[i]) {
-           // path compression, point current node to its grandparent, halving path length
-           id[i] = id[id[i]];
-           i = id[i];
-       }
-       return i;
+        while (i != id[i]) {
+            // path compression, point current node to its grandparent, halving path length
+            id[i] = id[id[i]];
+            i = id[i];
+        }
+        return i;
+    }
+
+    public int findMax(int i) {
+        return max[find(i)];
     }
 
     @Override
