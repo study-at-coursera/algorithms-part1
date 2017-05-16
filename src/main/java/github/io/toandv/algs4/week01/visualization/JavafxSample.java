@@ -27,7 +27,7 @@ public class JavafxSample extends Application {
         TreeNode child2 = new TreeNode("3", 800, 400);
         rootNode1.addChild(child1);
         rootNode1.addChild(child2);
-        rootNode1.show1();
+        rootNode1.show();
 
         Scene scene = new Scene(root, 1000, 800);
 

@@ -35,7 +35,7 @@ public class TreeNode {
     }
 
     // http://stackoverflow.com/questions/5987867/traversing-a-n-ary-tree-without-using-recurrsion
-    // Depth-first traversal
+    // Depth-first traversal ???
     public void show() {
         // group.getChildren().addAll(circle, text);
         Deque<TreeNode> stack = new ArrayDeque<>();
