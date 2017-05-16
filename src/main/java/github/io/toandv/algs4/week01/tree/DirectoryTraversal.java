@@ -2,6 +2,7 @@ package github.io.toandv.algs4.week01.tree;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.ArrayDeque;
 import java.util.Stack;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -12,7 +13,6 @@ import java.util.stream.Stream;
  * https://en.wikipedia.org/wiki/Tree_traversal
  */
 public class DirectoryTraversal {
-
 
     public static void postOrderRecur(File file) {
         File[] subFiles = file.listFiles();
@@ -32,7 +32,6 @@ public class DirectoryTraversal {
         }
     }
 
-
     public static void postOrderIter(File file, Consumer<File> fileOperator) {
         class Item {
             File file;
@@ -42,7 +41,7 @@ public class DirectoryTraversal {
                 this.file = file;
             }
         }
-        Stack<Item> stack = new Stack<>();
+        ArrayDeque<Item> stack = new ArrayDeque<>();
         stack.push(new Item(file));
         while (!stack.isEmpty()) {
             Item top = stack.peek();
@@ -57,23 +56,20 @@ public class DirectoryTraversal {
                 stack.pop();
             }
         }
-
     }
 
-
-    public static void main(String[] args) {
-        File study = new File("/home/toan/Study/Dropbox/Study In Depth");
-        Stream.of(study.listFiles()).parallel().forEach(dir -> {
-            postOrderIter(dir, file -> {
-                System.out.println(Thread.currentThread() + " is deleting " + file);
-                file.delete();
+    public static void delete(String deletingDir) {
+        File file = new File(deletingDir);
+        File[] subs = file.listFiles();
+        if (subs != null) {
+            Stream.of(subs).parallel().forEach(sub -> {
+                postOrderIter(sub, f -> {
+                    System.out.println("Deleting " + f);
+                    f.delete();
+                    System.out.println("Deleted " + f);
+                });
             });
-        });
-//        postOrderIter(new File("/home/toan/Study/Dropbox/ws"), file -> {
-//            System.out.println("deleting " + file);
-//            file.delete();
-//        });
+        }
+        file.delete();
     }
-
-
 }
